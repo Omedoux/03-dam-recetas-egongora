@@ -11,20 +11,24 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late Future<List<Receta>> _recetas;
+  final RecipeService _recipeService = RecipeService();
+  late Future<List<Receta>> _futureRecetas;
 
   @override
   void initState() {
     super.initState();
-    _recetas = RecipeService().obtenerRecetas();
+    _futureRecetas = _recipeService.obtenerRecetas();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Recetas del Mayab')),
+      appBar: AppBar(
+        title: const Text('RecetasApp'),
+        backgroundColor: const Color.fromARGB(255, 80, 23, 3),
+      ), // AppBar
       body: FutureBuilder<List<Receta>>(
-        future: _recetas,
+        future: _futureRecetas,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -34,14 +38,14 @@ class _HomeScreenState extends State<HomeScreen> {
           }
           final recetas = snapshot.data!;
           return ListView.builder(
+            padding: const EdgeInsets.symmetric(vertical: 8),
             itemCount: recetas.length,
-            itemBuilder: (context, i) => RecetaCard(
-              receta: recetas[i],
-              onTap: () {},
-            ),
-          );
+            itemBuilder: (context, index) {
+              return RecetaCard(receta: recetas[index]);
+            },
+          ); // ListView.builder
         },
-      ),
-    );
+      ), // FutureBuilder
+    ); // Scaffold
   }
 }

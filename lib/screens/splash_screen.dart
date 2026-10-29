@@ -18,7 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
         context,
         MaterialPageRoute(builder: (context) => const HomeScreen()),
       );
-    });
+    }); // Timer
   }
 
   @override
@@ -30,11 +30,14 @@ class _SplashScreenState extends State<SplashScreen> {
         children: [
           Icon(Icons.restaurant, color: Colors.white, size: 90),
           SizedBox(height: 16),
-          Text("Recetas App", style: TextStyle(color: Colors.white, fontSize: 28)),
+          Text(
+            "Recetas App",
+            style: TextStyle(color: Colors.white, fontSize: 28),
+          ),
           SizedBox(height: 24),
           CircularProgressIndicator(color: Colors.white),
         ],
-      ),
-    );
+      ), // Column
+    ); // Scaffold
   }
 }
